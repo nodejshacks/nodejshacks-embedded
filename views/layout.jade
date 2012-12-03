@@ -1,0 +1,42 @@
+!!! 5
+html(lang="en")
+  head
+    title Arduino control nodeuino for JavaScript and Node.js with WebSockets and HTML5
+    link(rel="stylesheet", href="styles/bootstrap/init.css")
+    link(rel="stylesheet", href="styles/prettify.css")
+    link(rel="stylesheet", href="styles/init.css")
+    script(data-main="scripts/app." + jsApp, type="text/javascript", src="scripts/vendor/require-jquery.js")
+    script(type="text/javascript", src="http://localhost:8090/socket.io/socket.io.js")
+  body
+    .navbar.navbar-fixed-top(style="z-index: 4;position:absolute;")
+      .navbar-inner
+        .container
+          div.nav-collapse
+            ul.nav
+              li(class=(active == 'home' ? 'active' : ''))
+                a(href="/") Home
+              li(class=(active == 'getting-started' ? 'active' : ''))
+                a(href="noduino") noduino               
+              li
+                a(href="johnnyfive") johnnyFive
+              // li
+              //   a(href="nodeArDrone") nodeArDrone
+              li
+                a(href="beaglebone") beagleBone
+              // li
+              //   a(href="spacebrew") spacebrew 
+              // li
+              //   a(href="ninjablocks") ninjablocks                             
+              // li
+              //   a(href="cosm") cosm
+              // li
+              //   a(href="arduinoSSE") arduino WS               
+              // li
+              //   a(href="arduinoSSE") arduinoSSE                 
+            div.nav-collapse.pull-right
+              ul.nav
+                li
+                  a(href="https://github.com/nodejshacks") nodejshacks
+      a(href="https://github.com/nodejshacks/embedded-node/fork_select")
+        img(style="position: absolute; top: 0; right: 0; border: 0; z-index: 10;",src="images/forkme.png",alt="Fork me on GitHub")          
+    .container!=body

@@ -1,0 +1,114 @@
+###basics
+$ > ls /dev | grep usb
+crw-rw-rw-   1 root       wheel      18,  17 24 Feb 22:54 cu.usbmodem1d11
+crw-rw-rw-   1 root       wheel      18,  16 24 Feb 22:00 tty.usbmodem1d11
+
+###node
+$ > git clone git@github.com:semu/noduino.git
+$ > cd noduino
+$ > git submodule update --init
+$ > npm install
+$ > node app.js
+
+Listening on http://localhost:8080
+
+###connect
+var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+Noduino.connect(function(err, board) {
+  if (err) { return console.log(err); }
+  
+  console.log('Connected to board');
+});
+
+###toggleLED
+var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+Noduino.connect(function(err, board) {
+  if (err) { return console.log(err); }
+  board.withLED({pin: 13}, function(err, LED) {
+    if (err) { return console.log(err); }
+        
+    LED.blink(250);
+    LED.on('on', function() }
+      console.log('LED is on!');
+    });
+  });
+});
+
+###listenButton
+var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+Noduino.connect(function(err, board) {
+  if (err) { return console.log(err); }
+  board.withButton({pin: 13}, function(err, Button) {
+    if (err) { return console.log(err); }
+
+    Button.on('push', function() }
+      console.log('Button pushed');
+    });
+    
+    Button.push();
+  });
+});
+
+###arduinoMotion
+int pirPin = 2; //digital 2
+int ledPin = 13;
+boolean hasCalibrated = false;
+
+void setup(){
+ Serial.begin(9600);
+ pinMode(pirPin, INPUT);
+ pinMode(ledPin, OUTPUT);
+}
+
+void loop(){
+  if (hasCalibrated == false) {
+    Serial.println("calibrating");
+    hasCalibrated = true;
+    delay(2000);
+  }
+  int pirVal = digitalRead(pirPin);
+
+  if(pirVal == HIGH){ //was motion detected
+    Serial.println("MOTION");
+    digitalWrite(ledPin,HIGH);
+    delay(500);
+  } else {
+    Serial.println("Zzzz");
+    digitalWrite(ledPin,LOW);
+    delay(500);
+  }
+}
+
+###basicLEDNoduino
+var Noduino = new NoduinoObj({debug: false, host: 'http://localhost:8090'}, Connector, Logger);
+Noduino.connect(function(err, board) {    
+  board.withLED({pin: 13}, function(err, LED) {
+    LED.blink(250);
+    LED.on('on', function() {
+      console.log('LED is on!');
+    });
+  });
+});
+
+
+###basicLEDJohnny
+
+var five = require("johnny-five"),
+  board = new five.Board();
+  board.on("ready", function() {
+
+    var led = new five.Led(13); 
+    var pir = new five.Pir({"pin": 2});
+
+    pir.on("calibrated", function() {
+      console.log( "calibrated" );
+    });
+    pir.on("motionstart", function() {
+      console.log( "MOTION" );
+      led.strobe();
+    });
+    pir.on("motionend", function() {
+      console.log( "Zzzz" );
+      led.stop();
+    });
+});
